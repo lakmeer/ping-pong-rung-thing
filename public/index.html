@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ping Ping Leaderboard</title>
+    <link rel="stylesheet" href="/index.css">
+  </head>
+
+  <body>
+    <section data-view="ranking">
+      <h2 class="title"> Player Leaderboard </h2>
+
+      <div data-rankings>
+
+      </div>
+
+      <div class="actions">
+        <button data-action="startGame"> Start Match </button>
+        <button data-action="addPlayer"> Add Player </button>
+        <button data-action="addPlayer"> See Stats </button>
+      </div>
+    </section>
+
+
+    <section data-view="player-select">
+      <h2 class="title"> Select Your Players </h2>
+
+      <div class="player-selection" data-player-choices> </div>
+
+      <div class="actions">
+        <button data-action="ready" disabled> Begin Match </button>
+        <button data-action="cancel"> Cancel Match </button>
+      </div>
+    </section>
+
+
+    <section data-view="match">
+      <div class="scores">
+        <div class="player-info" data-player-view>
+          <h3 class="name"> Player A </h3>
+          <div class="image"><img src=""></div>
+          <span class="score"> 0 </span>
+          <button data-score-for="-1"> +1 to Player A </button>
+        </div>
+
+        <div class="vs">vs</div>
+
+        <div class="player-info" data-player-view>
+          <h3 class="name"> Player B </h3>
+          <div class="image"><img src=""></div>
+          <span class="score"> 0 </span>
+          <button data-score-for="-1"> +1 to Player B </button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button data-action="cancel"> Cancel Match </button>
+      </div>
+    </section>
+
+
+    <section data-view="stats">
+      <h2 class="title"> Player Statistics </h2>
+
+      <table class="player-stats">
+        <thead>
+          <tr> <th>Player</th><th>Wins</th><th>Ratio</th><th>Total Matches</th><th>Total Points</th> </tr>
+        </thead>
+        <tbody data-stats-rows>
+        </tbody>
+      </table>
+
+      <div class="actions">
+        <button data-action="start-game"> Start Match </button>
+        <button data-action="add-player"> Add Player </button>
+      </div>
+    </section>
+
+
+    <section data-view="add-player">
+      <h2 class="title"> Add New Player </h2>
+
+      <div class="camera">
+        <canvas id="camera"></canvas>
+        <button data-camera-ready>Take Photo</button>
+      </div>
+
+      <input class="name" type="text" placeholder="Name">
+
+      <div class="actions">
+        <button data-action="done">Done</button>
+      </div>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>

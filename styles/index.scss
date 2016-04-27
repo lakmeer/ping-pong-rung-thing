@@ -1,0 +1,174 @@
+
+body {
+  display: flex;
+}
+
+section {
+  opacity: 0.2;
+  padding: 0 20px;
+  border-left: 1px solid black;
+  min-width: 200px;
+}
+
+button {
+  padding: 10px 10px;
+  display: inline-block;
+  font-size: 15px;
+  width: 100%;
+  background: #ddd;
+  border: 1px solid black;
+  outline: 0px none !important;
+}
+
+[data-rankings] img {
+  max-width: 80px;
+}
+
+
+.player-stats img {
+  max-width: 40px;
+}
+
+.title {
+  font-family: sans-serif;
+  border-bottom: 1px dashed black;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.actions {
+  display: flex;
+  padding-top: 20px;
+  border-top: 1px dashed black;
+  margin-top: 20px;
+
+  button {
+    background: #555;
+    color: white;
+
+    &:disabled {
+      background: #999;
+      border-color: #999;
+    }
+
+    &:active {
+      color: #555;
+      background: white;
+    }
+
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    &:last-child  {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    & + button {
+      border-left-width: 0;
+    }
+  }
+}
+
+
+/// Player Selection Pane
+
+[data-view="player-select"] {
+
+}
+
+
+// Player Selection Buttons
+
+.player-selection {
+  button {
+    border: 0px none;
+    padding: 0;
+    display: flex;
+    margin-bottom: 5px;
+    line-height: 50px;
+    font-size: larger;
+
+    img { height: 50px; display: block; margin-right: 10px; }
+  }
+
+  button[data-selection="first"]  {
+    background: #f76;
+  }
+
+  button[data-selection="second"] {
+    background: #89f;
+  }
+}
+
+
+/// Match Progress Pane
+
+[data-view="match"] {
+
+}
+
+
+// Two-up Player Views
+
+.scores {
+  display: flex;
+
+  .vs {
+    font-weight: bold;
+    align-self: center;
+    margin: 0 1em;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+}
+
+
+// Player View
+
+.player-info {
+
+  .image {
+    position: relative;
+
+    img {
+      width: 80px;
+      display: block;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      mix-blend-mode: multiply;
+    }
+  }
+
+  &:nth-child(1) {
+    button {
+      background: #f76;
+    }
+
+    .image:after {
+      background: rgba(red, 0.2);
+      border: 5px solid red;
+    }
+  }
+
+  &:nth-child(3) {
+    button {
+      background: #89f;
+    }
+
+    .image:after {
+      background: rgba(blue, 0.2);
+      border: 5px solid blue;
+    }
+  }
+}
+
