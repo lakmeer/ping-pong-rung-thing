@@ -17,7 +17,7 @@
       <div class="actions">
         <button data-action="startGame"> Start Match </button>
         <button data-action="addPlayer"> Add Player </button>
-        <button data-action="addPlayer"> See Stats </button>
+        <button data-action="showStats"> See Stats </button>
       </div>
     </section>
 
@@ -37,19 +37,13 @@
     <section data-view="match">
       <div class="scores">
         <div class="player-info" data-player-view>
-          <h3 class="name"> Player A </h3>
           <div class="image"><img src=""></div>
           <span class="score"> 0 </span>
-          <button data-score-for="-1"> +1 to Player A </button>
         </div>
 
-        <div class="vs">vs</div>
-
         <div class="player-info" data-player-view>
-          <h3 class="name"> Player B </h3>
           <div class="image"><img src=""></div>
           <span class="score"> 0 </span>
-          <button data-score-for="-1"> +1 to Player B </button>
         </div>
       </div>
 
@@ -71,8 +65,9 @@
       </table>
 
       <div class="actions">
-        <button data-action="start-game"> Start Match </button>
-        <button data-action="add-player"> Add Player </button>
+        <button data-action="startMatch"> Start Match </button>
+        <button data-action="addPlayer"> Add Player </button>
+        <button data-action="showRanking"> See Ranks </button>
       </div>
     </section>
 
@@ -80,17 +75,30 @@
     <section data-view="add-player">
       <h2 class="title"> Add New Player </h2>
 
-      <div class="camera">
-        <canvas id="camera"></canvas>
+      <div class="big-text" data-big-text>
+        <span></span>
+      </div>
+
+      <div class="camera" data-camera>
+        <div class="capture-region">
+          <canvas></canvas>
+          <video></video>
+          <div class="outline"></div>
+        </div>
         <button data-camera-ready>Take Photo</button>
       </div>
 
-      <input class="name" type="text" placeholder="Name">
+      <div class="name-entry">
+        <input data-name-entry class="name" type="text" placeholder="Name">
+      </div>
 
       <div class="actions">
-        <button data-action="done">Done</button>
+        <button data-action="cancel">Cancel</button>
+        <button data-action="complete">Done</button>
       </div>
     </section>
+
+    <div class="flash-effect"></div>
 
     <script src="app.js"></script>
   </body>

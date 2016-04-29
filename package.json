@@ -20,6 +20,7 @@
     "browserify": "^10.2.4",
     "browserify-livescript": "^0.2.1",
     "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-connect": "^2.2.0",
     "gulp-util": "^3.0.6",
     "livescript": "^1.4.0",

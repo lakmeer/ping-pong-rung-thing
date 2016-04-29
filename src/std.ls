@@ -38,3 +38,7 @@ export into = (type, items) -->
   items.map el~append-child
   return el
 
+export flip = (λ) -> (a, b) -> λ b, a
+
+export delay = flip set-timeout
+

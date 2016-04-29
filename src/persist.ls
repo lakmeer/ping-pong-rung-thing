@@ -60,3 +60,6 @@ export hydrate-state = ->
 export get-all-players = ->
   State.records.players
 
+export get-player-from-id = (pid) ->
+  State.records.players[pid]
+

@@ -3,7 +3,7 @@ require \./config
 require \./const
 
 { id, log, rand, max, qsa, int, on-tap, contains, to-array } = require \./std
-{ initial-state, persist-state, get-all-players } = require \./persist
+{ initial-state, persist-state, get-all-players, get-player-from-id } = require \./persist
 
 { generate-stats } = require \./stats
 
@@ -14,9 +14,6 @@ require \./const
 
 new-player = ({ name, image }) ->
   { name, image, id: next-available-player-id! }
-
-get-player-from-id = (pid) ->
-  State.records.players[pid]
 
 next-available-player-id = ->
   1 + State.players.reduce (-> max &0, &1.id), 0
@@ -51,10 +48,6 @@ new-game-state = ->
 
 # Renderers
 
-render-player-ranking = (player-id, ix) ->
-  player = get-player-from-id player-id
-  """<img src="#{player.image}"><span>#{player.name}</span>"""
-
 render-stats-row = ({ player, wins, total, ratio, score }) ->
   """<tr>
       <td><img src="#{player.image}">#{player.name}</td>
@@ -68,91 +61,11 @@ render-stats-row = ({ player, wins, total, ratio, score }) ->
 
 # Init
 
-Leaderboard = new Pane '[data-view="ranking"]', ->
-  for event, action of @actions
-    @callbacks[event] = id
-    action.on-action this~enqueue event
-
-  @on-start-match = @register \startGame
-  @on-add-player  = @register \addPlayer
-
-
-PlayerSelect = new Pane '[data-view="player-select"]', (host) ->
-
-  @dom.choices = host.query-selector '[data-player-choices]'
-  @dom.buttons = []
-
-  @state.selected-players = []
-
-  select-player = (player-id) ~> ~>
-    if @state.selected-players `contains` player-id
-      @state.selected-players .= filter (isnt player-id)
-    else if @state.selected-players.length >= 2
-      console.warn "Can't select more than two, obviously"
-    else
-      @state.selected-players.push player-id
-
-    @actions.ready.el.disabled = @state.selected-players.length < 2
-
-    mark-selected-players @state.selected-players
-
-  mark-selected-players = (player-ids) ~>
-    @dom.buttons.map ->
-      switch player-ids.index-of int it.dataset.player
-      | 0 => it.dataset.selection = "first"
-      | 1 => it.dataset.selection = "second"
-      | _ => it.dataset.selection = ""; it.disabled = player-ids.length >= 2
-
-  ready = ~>
-    @dispatch \select, @state.selected-players
-    @state.selected-players = []
-
-  @callbacks.select = id
-
-  @actions.ready.on-action ready
-
-  @on-players-selected = @register \select
-  @on-cancel           = @register \cancel
-
-  @populate-choices = (players) ->
-    @dom.choices.innerHTML = ""
-    for player in players
-      button = document.create-element \button
-      button.dataset.player = player.id
-      button.innerHTML = "<img src='#{player.image}'> #{player.name}"
-      @dom.choices.append-child button
-      on-tap button, select-player player.id
-    @dom.buttons = to-array @dom.choices.children
-
-
-MatchProgress = new Pane '[data-view="match"]', (host) ->
-
-  player-view = (dom, q = dom~query-selector) ->
-    q = dom~query-selector
-    name   = q \.name
-    image  = q \img
-    score  = q \.score
-    button = q \button
-
-    populate: (player) ->
-      name.text-content = player.name
-      image.src = player.image
-      score.text-content = '0'
-      button.text-content = "+1"
-
-  player-views = (qsa host, '[data-player-view]').map player-view
-
-  @begin-new-match = (players) ->
-    State.panes.match.players = players
-    State.panes.match.stage   = GAME_STAGE_IN_PROGRESS
-    State.panes.match.scores  = [ 0, 0 ]
-    for view, ix in player-views => view.populate players[ix]
-
-
-PlayerStats = new Pane '[data-view="stats"]', (host) ->
-
-
-AddPlayer   = new Pane '[data-view="add-player"]', (host) ->
+Leaderboard   = require \./panes/leaderboard
+PlayerSelect  = require \./panes/player-select
+PlayerStats   = require \./panes/stats
+MatchProgress = require \./panes/match-progress
+AddPlayer     = require \./panes/add-player
 
 
 set-metastate = (metastate, options) ->
@@ -160,45 +73,62 @@ set-metastate = (metastate, options) ->
   State.current-pane.conceal!
 
   switch metastate
-  | META_STATE_PLAYER_SELECT =>
-    PlayerSelect.reveal!
-    PlayerSelect.populate-choices get-all-players!
   | META_STATE_LEADERBOARD =>
-    Leaderboard.reveal!
     Leaderboard.update-ranking State
+    Leaderboard.reveal!
+
+  | META_STATE_PLAYER_SELECT =>
+    PlayerSelect.populate-choices get-all-players!
+    PlayerSelect.reveal!
+
   | META_STATE_GAME_IN_PROGRESS =>
-    MatchProgress.reveal!
     MatchProgress.begin-new-match options
+    MatchProgress.reveal!
+
   | META_STATE_STATS =>
-    PlayerStats.reveal!
     PlayerStats.populate-stats State.players, State.games
+    PlayerStats.reveal!
+
+  | META_STATE_ADD_PLAYER =>
+    AddPlayer.begin!
+    AddPlayer.reveal!
+
   | otherwise =>
     return console.error "Unknown metagamestate: ", metastate
 
   State.metastate = metastate
 
 
-Leaderboard.on-start-match ->
-  set-metastate META_STATE_PLAYER_SELECT
 
-PlayerSelect.on-players-selected (player-ids) ->
-  State.panes.match.players = player-ids.map get-player-from-id
-  set-metastate META_STATE_GAME_IN_PROGRESS, player-ids.map get-player-from-id
+# Wire everything together
 
-PlayerSelect.on-cancel ->
-  log \bail
+Leaderboard.on-start-match -> set-metastate META_STATE_PLAYER_SELECT
+Leaderboard.on-show-stats  -> set-metastate META_STATE_STATS
+Leaderboard.on-add-player  -> set-metastate META_STATE_ADD_PLAYER
 
+PlayerSelect.on-selection -> set-metastate META_STATE_GAME_IN_PROGRESS, it.map get-player-from-id
+PlayerSelect.on-cancel    -> log \bail
+
+MatchProgress.on-match-complete -> log \complete, it
+MatchProgress.on-cancel         -> log \bail
+
+PlayerStats.on-start-match   -> set-metastate META_STATE_PLAYER_SELECT
+PlayerStats.on-add-player    -> set-metastate META_STATE_ADD_PLAYER
+PlayerStats.on-show-rankings -> set-metastate META_STATE_LEADERBOARD
+
+AddPlayer.on-complete -> log \complete
+AddPlayer.on-cancel   -> log \cancel
 
 
 # Init
 
-global.State = initial-state current-pane: PlayerSelect
+global.State = initial-state current-pane: AddPlayer
 #console.table State.records.players
 #console.table State.records.games
 
-PlayerSelect.populate-choices State.records.players
-
+#Leaderboard.update-ranking derive-player-ranking State.records.players, State.records.games
 #MatchProgress.begin-new-match [ State.records.players.0, State.records.players.1 ]
-State.current-pane.reveal!
+AddPlayer.begin!
 
+State.current-pane.reveal!
 

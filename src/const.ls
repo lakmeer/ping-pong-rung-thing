@@ -8,9 +8,9 @@ global.GAME_STAGE_PLAYER_SELECT = Symbol \select
 global.GAME_STAGE_IN_PROGRESS   = Symbol \playing
 global.GAME_STAGE_COMPLETE      = Symbol \complete
 
-global.META_STATE_LEADERBOARD      = Symbol \leaderboard
-global.META_STATE_PLAYER_SELECT    = Symbol \leaderboard
-global.META_STATE_GAME_IN_PROGRESS = Symbol \leaderboard
-global.META_STATE_STATS            = Symbol \leaderboard
-global.META_STATE_NEW_PLAYER       = Symbol \leaderboard
+global.META_STATE_LEADERBOARD      = Symbol \meta-leaderboard
+global.META_STATE_PLAYER_SELECT    = Symbol \meta-player-select
+global.META_STATE_GAME_IN_PROGRESS = Symbol \meta-game-in-progress
+global.META_STATE_STATS            = Symbol \meta-stats
+global.META_STATE_ADD_PLAYER       = Symbol \meta-add-player
 

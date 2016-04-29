@@ -1,7 +1,7 @@
 
 # TODO
 
-- Get tim to do some street-fighter styles
+- Get tim to do some street-fightery styles
 - Camera access
 - Storing photos without filesystem
   - or, ajax photo data to backend with simple filestore

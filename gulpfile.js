@@ -6,6 +6,7 @@ var gulp       = require('gulp'),
     browserify = require('browserify'),
     connect    = require('gulp-connect'),
     sass       = require('gulp-sass'),
+    prefix     = require('gulp-autoprefixer'),
     source     = require('vinyl-source-stream');
 
 
@@ -59,6 +60,7 @@ gulp.task('browserify', function () {
 gulp.task('styles', function () {
   gulp.src('styles/index.scss')
     .pipe(sass().on('error', errorReporter))
+    .pipe(prefix())
     .pipe(gulp.dest('public'))
 });
 
