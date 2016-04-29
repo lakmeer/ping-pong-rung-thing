@@ -11,14 +11,17 @@
 body {
   display: flex;
   font-family: sans-serif;
+  max-height: 100vh;
+  overflow-y: hidden;
 }
 
 section {
   opacity: 0.2;
   padding: 0 20px;
-  border-left: 1px solid black;
-  min-width: 300px;
+  border-left:  1px solid black;
+  border-right: 1px solid black;
   position: relative;
+  min-width: 75vh;
 }
 
 button {
@@ -32,10 +35,6 @@ button {
 }
 
 
-.player-stats img {
-  max-width: 40px;
-}
-
 .title {
   font-family: sans-serif;
   border-bottom: 1px dashed black;
@@ -45,9 +44,12 @@ button {
 
 .actions {
   display: flex;
-  padding-top: 20px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
   border-top: 1px dashed black;
-  margin-top: 20px;
 
   button {
     background: #555;
@@ -252,6 +254,46 @@ button {
     .score { color: blue; bottom: 0; text-align: left; }
     margin-bottom: -45%;
   }
+}
+
+/// Player Stats Pane
+
+[data-view="stats"] {
+}
+
+.player-stats {
+
+  $size: 35px;
+
+  width: 100%;
+  border-collapse: collapse;
+
+  td, th {
+    text-align: left;
+    vertical-align: middle;
+    height: $size;
+    padding: 5px;
+  }
+
+  td {
+    line-height: $size;
+    white-space: nowrap;
+    border-top: 1px solid black;
+
+    &:first-child { padding-left: 0; }
+    &:last-child { padding-right: 0; }
+  }
+
+  td + td, th + th {
+    border-left: 1px solid black;
+  }
+
+  img {
+    vertical-align: middle;
+    max-height: $size;
+    margin-right: 5px;
+  }
+
 }
 
 

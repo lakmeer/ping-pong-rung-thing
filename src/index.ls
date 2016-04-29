@@ -51,7 +51,7 @@ MatchProgress.on-complete -> log \complete, it
 MatchProgress.on-cancel go-home
 
 
-PlayerStats.on-start-match   ->
+PlayerStats.on-start-match ->
   PlayerSelect.populate-choices Data.get-player-list!
   show PlayerSelect
 
@@ -86,5 +86,6 @@ go-home = ->
 #Data.prepare-match-state Data.get-player-selection!
 
 Leaderboard.update-ranking Data.get-player-rankings!
-show Leaderboard
+PlayerStats.populate-stats Data.get-player-stats!
+show PlayerStats
 

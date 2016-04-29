@@ -1,5 +1,5 @@
 
-{ id, log, max, contains } = require \./std
+{ id, log, max, len, sigfig, contains } = require \./std
 
 { Persist } = require \./persist
 
@@ -80,6 +80,31 @@ select-player = (pid) ->
   else
     selection.push pid
 
+group-by = (λ, list) ->
+  res = {}
+  list.map (x) -> res[][λ x].push x
+  return res
+
+sum-score = (player-key, games) -->
+  if games?
+    games.reduce (-> &0 + &1[player-key].score), 0
+  else
+    0
+
+generate-stats = (players, games) ->
+  games-by-winner = group-by (.winner.id), games
+  games-by-loser  = group-by (.loser.id), games
+
+  for player in players
+    win-points  = sum-score \winner, games-by-winner[player.id]
+    lose-points = sum-score \loser, games-by-loser[player.id]
+
+    player: player
+    wins:  wins = len games-by-winner[player.id]
+    total: total = wins + len games-by-loser[player.id]
+    ratio: if total then sigfig 3, wins / total else 0
+    score: win-points + lose-points
+
 
 # Interface
 
@@ -108,4 +133,7 @@ module.exports =
     DATA.panes.match.players = players.map ({ id }) -> { id, score: 0 }
     DATA.panes.match.stage = GAME_STAGE_IN_PROGRESS
 
+  # Players Stats
+  get-player-stats: ->
+    generate-stats PLAYERS, GAMES
 

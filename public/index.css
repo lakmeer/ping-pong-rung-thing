@@ -6,14 +6,17 @@ body {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  font-family: sans-serif; }
+  font-family: sans-serif;
+  max-height: 100vh;
+  overflow-y: hidden; }
 
 section {
   opacity: 0.2;
   padding: 0 20px;
   border-left: 1px solid black;
-  min-width: 300px;
-  position: relative; }
+  border-right: 1px solid black;
+  position: relative;
+  min-width: 75vh; }
 
 button {
   padding: 10px 10px;
@@ -23,9 +26,6 @@ button {
   background: #ddd;
   border: 1px solid black;
   outline: 0px none !important; }
-
-.player-stats img {
-  max-width: 40px; }
 
 .title {
   font-family: sans-serif;
@@ -38,9 +38,12 @@ button {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding-top: 20px;
-  border-top: 1px dashed black;
-  margin-top: 20px; }
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+  border-top: 1px dashed black; }
   .actions button {
     background: #555;
     color: white; }
@@ -220,6 +223,29 @@ button {
       color: blue;
       bottom: 0;
       text-align: left; }
+
+.player-stats {
+  width: 100%;
+  border-collapse: collapse; }
+  .player-stats td, .player-stats th {
+    text-align: left;
+    vertical-align: middle;
+    height: 35px;
+    padding: 5px; }
+  .player-stats td {
+    line-height: 35px;
+    white-space: nowrap;
+    border-top: 1px solid black; }
+    .player-stats td:first-child {
+      padding-left: 0; }
+    .player-stats td:last-child {
+      padding-right: 0; }
+  .player-stats td + td, .player-stats th + th {
+    border-left: 1px solid black; }
+  .player-stats img {
+    vertical-align: middle;
+    max-height: 35px;
+    margin-right: 5px; }
 
 [data-view="add-player"] .camera + .name-entry {
   margin-top: 20px; }

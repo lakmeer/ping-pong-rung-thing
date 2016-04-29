@@ -28,6 +28,7 @@ export class Pane
     @callbacks[event] = λ
 
   dispatch: (event, ...args) ~>
+    log \dispatch event
     @callbacks[event]?.apply null, args
 
   enqueue: (event, args = []) ~> ~>
