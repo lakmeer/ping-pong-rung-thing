@@ -21,6 +21,9 @@ export class Pane
     init.call this, @dom.main
     @conceal!
 
+  use: (state) ->
+    @state = state
+
   register: (event, λ) ~~>
     @callbacks[event] = λ
 

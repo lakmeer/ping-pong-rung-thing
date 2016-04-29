@@ -1,11 +1,9 @@
 
 { id, log, qsa } = require \../std
-{ get-player-from-id } = require \../persist
 
 { Pane } = require \../pane
 
-render-player-ranking = (player-id, ix) ->
-  player = get-player-from-id player-id
+render-player-ranking = (player, ix) ->
   """<div class="ranked-player"><img src="#{player.image}"><span>#{player.name}</span></div>"""
 
 module.exports = new Pane '[data-view="ranking"]', (host) ->

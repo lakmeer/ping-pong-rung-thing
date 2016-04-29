@@ -5,22 +5,17 @@
 
 module.exports = new Pane '[data-view="player-select"]', (host) ->
 
+  # Dom
   @dom.choices = host.query-selector '[data-player-choices]'
   @dom.buttons = []
 
-  @state.selected-players = []
+  # State
+  @callbacks.select = id
+  @callbacks.ready  = id
 
+  # Helpers
   select-player = (player-id) ~> ~>
-    if @state.selected-players `contains` player-id
-      @state.selected-players .= filter (isnt player-id)
-    else if @state.selected-players.length >= 2
-      console.warn "Can't select more than two, obviously"
-    else
-      @state.selected-players.push player-id
-
-    @actions.ready.el.disabled = @state.selected-players.length < 2
-
-    mark-selected-players @state.selected-players
+    @callbacks.select player-id
 
   mark-selected-players = (player-ids) ~>
     @dom.buttons.map ->
@@ -29,16 +24,7 @@ module.exports = new Pane '[data-view="player-select"]', (host) ->
       | 1 => it.dataset.selection = "second"
       | _ => it.dataset.selection = ""; it.disabled = player-ids.length >= 2
 
-  ready = ~>
-    @dispatch \select, @state.selected-players
-    @state.selected-players = []
-
-  @callbacks.select = id
-
-  @actions.ready.on-action ready
-
-
-  @populate-choices = (players) ->
+  populate-choices = (players) ->
     @dom.choices.innerHTML = ""
     for player in players
       button = document.create-element \button
@@ -49,6 +35,20 @@ module.exports = new Pane '[data-view="player-select"]', (host) ->
       on-tap button, select-player player.id
     @dom.buttons = to-array @dom.choices.children
 
+  update-view = ({ selection }) ->
+    @actions.ready.el.disabled = selection.length < 2
+    mark-selected-players selection
+
+  ready = ~>
+    @dispatch \ready
+
+  # Listeners
+  @actions.ready.on-action ready
+
+  # Interface
+  @on-ready     = @register \ready
   @on-selection = @register \select
   @on-cancel    = @register \cancel
+  @update-view  = update-view
+  @populate-choices = populate-choices
 
