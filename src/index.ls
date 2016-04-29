@@ -86,6 +86,5 @@ go-home = ->
 #Data.prepare-match-state Data.get-player-selection!
 
 Leaderboard.update-ranking Data.get-player-rankings!
-PlayerStats.populate-stats Data.get-player-stats!
-show PlayerStats
+show Leaderboard
 
