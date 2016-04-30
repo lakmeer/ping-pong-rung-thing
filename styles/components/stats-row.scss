@@ -1,0 +1,36 @@
+
+.stats-row {
+
+  $size: 35px;
+
+  td {
+    text-align: left;
+    vertical-align: middle;
+    height: $size;
+    padding: 5px 10px;
+  }
+
+  th:first-child {
+
+  }
+
+  td {
+    line-height: $size;
+    white-space: nowrap;
+    border-top: 1px solid white;
+
+    &:first-child { padding-left: 0; }
+    &:last-child { padding-right: 0; }
+  }
+
+  td + td {
+    border-left: 1px solid white;
+  }
+
+  img {
+    vertical-align: middle;
+    max-height: $size;
+    margin-right: 8px;
+  }
+}
+

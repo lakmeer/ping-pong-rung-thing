@@ -86,10 +86,10 @@
 
       <table class="player-stats">
         <thead>
-          <tr> <th>Player</th><th>Wins</th><th>Ratio</th><th>Games</th><th>Points</th> </tr>
+          <tr class="stats-header"> <th>Player</th><th>Wins</th><th>Ratio</th><th>Games</th><th>Points</th> </tr>
         </thead>
-        <tbody data-stats-rows>
-        </tbody>
+
+        <tbody data-stats-rows> </tbody>
       </table>
 
       <div class="actions">
@@ -116,8 +116,9 @@
         <button data-camera-ready>Take Photo</button>
       </div>
 
-      <div class="name-entry">
-        <input data-name-entry class="name" type="text" placeholder="Name">
+      <div class="name-entry" data-name-entry>
+        <input type="text" name="player-name">
+        <div class="output"></div>
       </div>
 
       <div class="actions">

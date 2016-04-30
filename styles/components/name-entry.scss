@@ -1,0 +1,49 @@
+
+.name-entry {
+
+  $height: 7vh;
+
+  position: relative;
+  padding-top: 3px;
+  border: 1px solid white;
+  box-shadow: 0 0 10px white, 0 0 10px white inset;
+  height: $height;
+
+  input {
+    display: block;
+    width: 100%;
+    height: $height;
+    color: transparent;
+    border: 0px none;
+    background: transparent;
+    outline: 0px none;
+  }
+
+  .output {
+    @include cover;
+
+    font-family: Joanna;
+    font-size: 4vh;
+    letter-spacing: 0.2em;
+    line-height: $height;
+    padding-left: 2vh;
+    right: auto;
+    width: auto;
+    display: inline-block;
+    z-index: -1;
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: 100%;
+      top: 5px;
+      bottom: 5px;
+      width: 2vh;
+      background: white;
+      display: block;
+      animation: blink 0.5s infinite linear;
+    }
+  }
+
+}
+

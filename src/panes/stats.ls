@@ -5,7 +5,7 @@
 
 
 render-stats-row = ({ player, wins, total, ratio, score }) ->
-  """<tr>
+  """<tr class="stats-row">
       <td><img src="#{player.image}">#{player.name}</td>
       <td>#wins</td>
       <td>#ratio</td>

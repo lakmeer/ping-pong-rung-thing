@@ -1,0 +1,38 @@
+
+.camera {
+  box-shadow: 0 0 10px white, 0 0 10px white inset;
+  border: 1px solid;
+
+  .capture-region {
+    position: relative;
+  }
+
+  canvas, video {
+    display: block;
+    width: 100%;
+  }
+
+  video {
+    @include cover;
+    z-index: 1;
+  }
+
+  .outline {
+    @include cover;
+    background: url('/images/outline.png') center bottom no-repeat;
+    background-size: auto 100%;
+    z-index: 2;
+  }
+
+  canvas {
+    position: relative;
+    z-index: 3;
+  }
+
+  button {
+    background: transparent;
+    color: white;
+    border: 1px solid;
+  }
+}
+

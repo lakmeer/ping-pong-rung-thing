@@ -1,0 +1,21 @@
+
+.stats-header {
+
+  $size: 35px;
+
+  th {
+    text-align: left;
+    vertical-align: middle;
+    height: $size;
+    padding: 5px 10px;
+  }
+
+  th + th {
+    border-left: 1px solid white;
+  }
+
+  th:first-child {
+    padding-left: $size + 8px;
+  }
+}
+

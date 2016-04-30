@@ -5,13 +5,23 @@
 { Camera }  = require \../camera
 { Pane }    = require \../pane
 
+TextInput = (host) ->
+
+  input  = host.query-selector \input
+  output = host.query-selector \div
+
+  input.add-event-listener \keydown -> delay 0, -> output.text-content = input.value
+  input.focus!
+
 
 module.exports = new Pane '[data-view="add-player"]', (host) ->
 
   countdown-data = [ [ 2, "LOOK MEAN IN..." ] [ 1, "3" ] [ 1, "2" ] [ 1, "1" ] ]
 
-  big-text = BigText host.query-selector '[data-big-text]'
-  camera   = Camera  host.query-selector '[data-camera]'
+  name-in  = TextInput host.query-selector '[data-name-entry]'
+  big-text = BigText   host.query-selector '[data-big-text]'
+  camera   = Camera    host.query-selector '[data-camera]'
+
 
   # Helpers
 

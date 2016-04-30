@@ -1,0 +1,39 @@
+
+.big-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(black, 0.2);
+  z-index: 5;
+  visibility: hidden;
+  //transition: transform 1s ease-out, opacity 1s ease-out;
+
+  &.reveal {
+    animation: big-text 0.5s ease-out;
+    animation-iteration-count: 1;
+  }
+
+  span {
+    color: white;
+    font-size: 100px;
+    font-family: "Impact", sans-serif;
+    line-height: 1em;
+    text-align: center;
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+    text-shadow:
+      -2px -2px 0 black,
+       2px -2px 0 black,
+      -2px  2px 0 black,
+       2px  2px 0 black;
+  }
+}
+
+

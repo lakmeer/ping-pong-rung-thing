@@ -87,17 +87,25 @@ if not BYPASS_LEADERBOARD = no
   Leaderboard.update-ranking Data.get-player-rankings!
   show Leaderboard
 
-if TESTING_PLAYER_SELECT = no
+if TESTING_PLAYER_SELECT?
   Data.select-player 0
   Data.select-player 1
   PlayerSelect.populate-choices Data.get-player-list!
   PlayerSelect.update-view Data.get-player-selection!
   show PlayerSelect
 
-if TESTING_MATCH
+if TESTING_MATCH?
   Data.select-player 1
   Data.select-player 0
   Data.prepare-match-state Data.get-player-selection!
   MatchProgress.begin-new-match Data.get-pane-state \match
   show MatchProgress
+
+if TESTING_STATS?
+  PlayerStats.populate-stats Data.get-player-stats!
+  show PlayerStats
+
+unless TESTING_CAMERA?
+  AddPlayer.begin!
+  show AddPlayer
 
