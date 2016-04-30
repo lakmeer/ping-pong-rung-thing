@@ -1,0 +1,41 @@
+
+/// Player Stats Pane
+
+[data-view="stats"] {
+}
+
+.player-stats {
+
+  $size: 35px;
+
+  width: 100%;
+  border-collapse: collapse;
+
+  td, th {
+    text-align: left;
+    vertical-align: middle;
+    height: $size;
+    padding: 5px;
+  }
+
+  td {
+    line-height: $size;
+    white-space: nowrap;
+    border-top: 1px solid black;
+
+    &:first-child { padding-left: 0; }
+    &:last-child { padding-right: 0; }
+  }
+
+  td + td, th + th {
+    border-left: 1px solid black;
+  }
+
+  img {
+    vertical-align: middle;
+    max-height: $size;
+    margin-right: 5px;
+  }
+
+}
+

@@ -43,7 +43,8 @@ PlayerSelect.on-ready ->
 
 PlayerSelect.on-selection (pid) ->
   Data.select-player pid
-  PlayerSelect.update-view Data.get-pane-state \select
+  Data.gen-hero-stats pid
+  PlayerSelect.update-view Data.get-player-selection!
 
 
 MatchProgress.on-complete -> log \complete, it
@@ -75,16 +76,28 @@ show = (pane) ->
   pane.reveal!
 
 go-home = ->
+  log \go-home
   Leaderboard.update-ranking Data.get-player-rankings!
   show Leaderboard
 
 
 # Init
 
-#Data.select-player 0
-#Data.select-player 1
-#Data.prepare-match-state Data.get-player-selection!
+if not BYPASS_LEADERBOARD = no
+  Leaderboard.update-ranking Data.get-player-rankings!
+  show Leaderboard
 
-Leaderboard.update-ranking Data.get-player-rankings!
-show Leaderboard
+if TESTING_PLAYER_SELECT = no
+  Data.select-player 0
+  Data.select-player 1
+  PlayerSelect.populate-choices Data.get-player-list!
+  PlayerSelect.update-view Data.get-player-selection!
+  show PlayerSelect
+
+if TESTING_MATCH
+  Data.select-player 1
+  Data.select-player 0
+  Data.prepare-match-state Data.get-player-selection!
+  MatchProgress.begin-new-match Data.get-pane-state \match
+  show MatchProgress
 

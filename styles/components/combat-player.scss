@@ -1,0 +1,99 @@
+
+$use:   2/5;
+$gap:   1/60;
+$split: 1/5;
+
+$height: calc(100vh - 5 * #{$gutter});
+
+.combat-player {
+  position: relative;
+  height: $height;
+  background: white;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  .image {
+    z-index: 1;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    img {
+      width: 100%;
+      position: absolute;
+      display: block;
+    }
+
+    &:before {
+      background: currentColor;
+      transform: rotate(-14deg);
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2vh;
+      z-index: 3;
+      mix-blend-mode: multiply;
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      border: 2vh solid;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      mix-blend-mode: multiply;
+    }
+  }
+
+  .score {
+    position: absolute;
+    font-size: 100px;
+    padding: 0 7%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    mix-blend-mode: multiply;
+    z-index: 2;
+  }
+}
+
+
+.combat-player.red {
+  color: red;
+  text-align: right;
+
+  clip-path: polygon(
+    0% 0%, 100% 0%,
+    100% ($use - $gap) * 100%,
+    0% ($use + $split - $gap) * 100%);
+
+  .image:before {
+    top: ($use + ($use * $split) - $gap) * 100%;
+  }
+
+  .image img, .score { top: 0; }
+}
+
+
+.combat-player.blue {
+  color: blue;
+  opacity: 0.5;
+
+  clip-path: polygon(
+    0% (1 - $use + $gap) * 100%,
+    100% (1 - ($use + $split) + $gap) * 100%,
+    100% 100%, 0% 100%);
+
+  .image:before {
+    bottom: ($use + ($use * $split) - $gap) * 100%;
+  }
+  .image img, .score { bottom: 0; }
+}
+

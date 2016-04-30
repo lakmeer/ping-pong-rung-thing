@@ -40,5 +40,12 @@ export into = (type, items) -->
 
 export flip = (λ) -> (a, b) -> λ b, a
 
-export delay = flip set-timeout
+export delay = (t, λ) -> set-timeout λ, t * 1000
+
+export ordinal = (n) ->
+  switch n % 10
+  | 1 => \st
+  | 2 => \nd
+  | 3 => \rd
+  | _ => \th
 

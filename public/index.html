@@ -2,46 +2,74 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Ping Ping Leaderboard</title>
+    <title>Ping Pong Leaderboard</title>
     <link rel="stylesheet" href="/index.css">
   </head>
 
   <body>
     <section data-view="ranking">
-      <h2 class="title"> Player Leaderboard </h2>
+      <h2 class="title"> Leaderboard </h2>
 
       <div data-rankings>
 
       </div>
 
       <div class="actions">
-        <button data-action="startGame"> Start Match </button>
-        <button data-action="addPlayer"> Add Player </button>
         <button data-action="showStats"> See Stats </button>
+        <button data-action="addPlayer"> Add Player </button>
+        <button data-action="startGame"> Start Match </button>
       </div>
     </section>
 
 
     <section data-view="player-select">
-      <h2 class="title"> Select Your Players </h2>
+      <div class="backdrop"></div>
 
       <div class="player-selection" data-player-choices> </div>
 
+      <div class="player-heroes">
+        <div class="player-hero">
+          <img src="">
+          <h3><span data-name></span> <span data-rank-badge=""></span></h3>
+
+          <table class="mini-stats">
+            <tbody>
+              <tr><td>Wins</td><td></td></tr>
+              <tr><td>Games</td><td></td></tr>
+              <tr><td>Ratio</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="player-hero">
+          <img src="">
+          <h3><span data-name></span> <span data-rank-badge=""></span></h3>
+
+          <table class="mini-stats">
+            <tbody>
+              <tr><td>Wins</td><td></td></tr>
+              <tr><td>Games</td><td></td></tr>
+              <tr><td>Ratio</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="actions">
-        <button data-action="ready" disabled> Begin Match </button>
         <button data-action="cancel"> Cancel Match </button>
+        <button data-action="ready" disabled> Begin Match </button>
       </div>
     </section>
 
 
     <section data-view="match">
-      <div class="scores">
-        <div class="player-info" data-player-view>
+      <div class="combatants">
+        <div class="combat-player red" data-combat-player>
           <div class="image"><img src=""></div>
           <span class="score"> 0 </span>
         </div>
 
-        <div class="player-info" data-player-view>
+        <div class="combat-player blue" data-combat-player>
           <div class="image"><img src=""></div>
           <span class="score"> 0 </span>
         </div>
@@ -54,7 +82,7 @@
 
 
     <section data-view="stats">
-      <h2 class="title"> Player Statistics </h2>
+      <h2 class="title"> Statistics </h2>
 
       <table class="player-stats">
         <thead>
@@ -73,7 +101,7 @@
 
 
     <section data-view="add-player">
-      <h2 class="title"> Add New Player </h2>
+      <h2 class="title"> New Player </h2>
 
       <div class="big-text" data-big-text>
         <span></span>
@@ -100,6 +128,7 @@
 
     <div class="flash-effect"></div>
 
+    <script src="TweenMax.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

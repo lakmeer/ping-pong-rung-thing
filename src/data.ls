@@ -97,13 +97,22 @@ generate-stats = (players, games) ->
 
   for player in players
     win-points  = sum-score \winner, games-by-winner[player.id]
-    lose-points = sum-score \loser, games-by-loser[player.id]
+    lose-points = sum-score \loser,  games-by-loser[player.id]
 
     player: player
     wins:  wins = len games-by-winner[player.id]
     total: total = wins + len games-by-loser[player.id]
     ratio: if total then sigfig 3, wins / total else 0
     score: win-points + lose-points
+
+index = (ix, list) --> list[ix]
+
+generate-hero = (player-id) ->
+  player = get-player-from-id player-id
+
+  player: player
+  rank:   derive-player-ranking PLAYERS |> (.index-of player) |> (+ 1)
+  stats:  generate-stats PLAYERS, GAMES |> (index player-id)
 
 
 # Interface
@@ -125,12 +134,13 @@ module.exports =
 
   # Player Select
   select-player: -> select-player it
-  get-player-selection: -> DATA.panes.select.selection.map get-player-from-id
+  gen-hero-stats: -> generate-hero it
+  get-player-selection: -> DATA.panes.select.selection.map generate-hero
   clear-player-selection: -> DATA.panes.select.selection = []
 
   # Match Progress
-  prepare-match-state: (players) ->
-    DATA.panes.match.players = players.map ({ id }) -> { id, score: 0 }
+  prepare-match-state: (selection) ->
+    DATA.panes.match.players = selection.map -> { player: it.player, score: 0 }
     DATA.panes.match.stage = GAME_STAGE_IN_PROGRESS
 
   # Players Stats

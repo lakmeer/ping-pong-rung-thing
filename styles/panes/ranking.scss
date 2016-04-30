@@ -1,0 +1,11 @@
+
+/// Leaderboard Pane
+
+[data-view="ranking"] {
+
+  [data-rankings] {
+    padding: 0 $gutter; // Compensates for skew effect leaking outside margins
+  }
+
+}
+

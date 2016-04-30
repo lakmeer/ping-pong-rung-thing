@@ -1,0 +1,50 @@
+
+.ranked-player {
+  $size: 50px;
+  $m: 1;
+
+  display: flex;
+  font-size: 24px;
+  line-height: $size;
+  height: $size;
+  margin-bottom: 5px;
+  background: #555;
+  transform: skew(-10deg);
+  position: relative;
+  overflow: hidden;
+
+  img {
+    width: $size;
+    display: block;
+    margin-right: 10px;
+    transform: skew(10deg) translateX(-4px);
+  }
+
+  span {
+    transform: skew(10deg);
+  }
+
+  &:before {
+    position: absolute;
+    width: $size;
+    height: $size;
+    transform: rotate(45deg);
+    top:   $size/-2;
+    right: $size/-2;
+    background-image: linear-gradient(90deg, rgba(white, 0), rgba(white, 0.4), rgba(white, 0));
+    background-position: -$size;
+    background-repeat: no-repeat;
+    background-size: $size $size;
+    animation: glint 5s infinite linear;
+  }
+
+  &:hover:before {
+    background-position: $size 0px;
+  }
+
+  &:nth-child(1):before { content: ""; animation-delay: 0.2s; background-color: $gold; }
+  &:nth-child(2):before { content: ""; animation-delay: 0.4s; background-color: $silver; }
+  &:nth-child(3):before { content: ""; animation-delay: 0.6s; background-color: $bronze; margin-bottom: 10px; }
+  &:nth-child(3) { margin-bottom: 30px; }
+}
+

@@ -1,0 +1,55 @@
+
+@font-face {
+  font-family: "Joanna";
+  src: url('/font/pdark.ttf');
+}
+
+@font-face {
+  font-family: "Motion";
+  src: url('/font/MotionControl-Bold.otf');
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: black;
+  color: white;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  font-family: sans-serif;
+  max-height: 100vh;
+  overflow-y: hidden;
+}
+
+section {
+  overflow: hidden;
+  opacity: 0.4;
+  height: 100vh;
+  padding: $gutter;
+  border-left:  1px solid white;
+  padding-bottom: $gutter * 2;
+  border-right: 1px solid white;
+  position: relative;
+  min-width: 75vh;
+}
+
+button {
+  padding: 10px 10px;
+  display: inline-block;
+  font-size: 15px;
+  width: 100%;
+  background: #ddd;
+  border: 1px solid black;
+  outline: 0px none !important;
+}
+

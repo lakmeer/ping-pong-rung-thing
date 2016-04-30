@@ -38,5 +38,5 @@ export class Pane
     @dom.main.style.opacity = 1
 
   conceal: ->
-    @dom.main.style.opacity = 0.2
+    @dom.main.style.opacity = 0.4
 

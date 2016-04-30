@@ -1,0 +1,23 @@
+
+.backdrop {
+  @include cover;
+  top: 50%;
+  z-index: -1;
+  background: url('/images/fire-2.gif') center bottom no-repeat black;
+  background-size: 100% 100%;
+
+  &:before, &:after {
+    @include cover;
+    content: "";
+    mix-blend-mode: multiply;
+    transition: background-color 0.5s;
+    background: black;
+  }
+
+  &:before { right: 50%; }
+  &:after  { left: 50%; }
+
+  &.selected-a:before { background: red; }
+  &.selected-b:after  { background: blue; }
+}
+
